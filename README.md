@@ -6,7 +6,8 @@ Simple wraper around [BeautifulSoup](http://www.crummy.com/software/BeautifulSou
   * Offer full control of included cookies
   * Return the actual response from the server, un-mangled and not reprocessed
 
-=== Installation
+Installation
+------------
 
     # pip install beautifulscraper
 
@@ -16,7 +17,9 @@ or
     # cd beautifulscraper/
     # python setup.py install
 
-=== Examples
+Examples
+--------
+
 Getting started is brain-dead simple.
 ```python
 >>> from beautifulscraper import BeautifulScraper
