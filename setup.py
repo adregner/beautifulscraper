@@ -31,6 +31,7 @@ PARAMS["packages"] = [
 PARAMS["data_files"] = [
         ("share/doc/{P[name]}-{P[version]}".format(P = PARAMS), [
             "README.md",
+            "CHANGELOG",
             ]),
         ]
 
