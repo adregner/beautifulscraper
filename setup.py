@@ -10,7 +10,7 @@ from distutils.core import setup
 
 PARAMS = {}
 PARAMS["name"] = "beautifulscraper"
-PARAMS["version"] = "1.0.0"
+PARAMS["version"] = "1.0.1"
 PARAMS["description"] = \
         "Python web-scraping library that wraps urllib2 and BeautifulSoup."
 PARAMS["long_description"] = \
