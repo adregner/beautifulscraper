@@ -80,8 +80,23 @@ class BeautifulScraper(object):
             rest = {}
             ))
 
-    def remove_cookie(self, key, domain=None, path=None):
-        pass
+    def remove_cookie(self, key=None, domain=None, path=None):
+        if doman and not (path or key):
+            self._cookiejar.clear(domain=domain)
+
+        elif domain and path and not key:
+            self._cookiejar.clear(domain=domain, path=path)
+
+        elif domain and path and key:
+            self._cookiejar.clear(domain=domain, path=path, name=key)
+
+        elif key and not (domain or path) and self._last_request:
+            parts = urlparse(self._last_request.get_full_url())
+            self._cookiejar.clear(domain=parts[1], path=parts[2], name=key)
+
+        else:
+            raise ValueError("You called this method wrong, and I can't remove the cookies you think " \
+                    "you are trying to tell me to remove.  Read `pydoc beautifulscraper.BeautifulScraper.remove_cookie`")
 
     def go(self, url, data = None):
         # make the request
