@@ -52,8 +52,8 @@ So is the response code as an integer.
 
 The scraper will keep track of all cookies it sees via the [cookielib.CookieJar class](http://docs.python.org/2/library/cookielib.html#cookiejar-and-filecookiejar-objects).  You can read the cookies if you'd like.  The [Cookie object](http://docs.python.org/2/library/cookielib.html#cookie-objects)'s are just a collection of properties.
 ```python
->>> scraper.cookies
-(Cookie(version=0, name='_gh_sess', value='BAh7BzoQX2NzcmZfdG9rZW4iMUNCOWxnbFpVd3EzOENqVk9GTUFXbDlMVUJIbGxsNEVZUFZJNiswRjhwejQ9Og9zZXNzaW9uX2lkIiUyNmQ2ODE5ZDdiZjM3MTA2N2VlZDk3Y2VlMDViYzI2OA%3D%3D--5d31df13d5c0eeb8f3cccb140392124968abc374', port=None, port_specified=False, domain='github.com', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=True, expires=1640995200, discard=False, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False),)
+>>> scraper.cookies[0].name
+'_gh_sess'
 ```
 
 See the pydoc for more information.
