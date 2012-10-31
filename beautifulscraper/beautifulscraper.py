@@ -15,6 +15,10 @@ class BeautifulScraper(object):
     """
 
     def __init__(self):
+        """This creates a new BeautifulScraper instance.  The only thing to note about what
+        this does is that the underlying CookieJar instance is stored only in memory, and
+        is an instance attribute of your current BeautifulScraper instance.
+        """
         self._headers = {}
         self._cookiejar = cookielib.CookieJar()
         self._last_request = None
@@ -28,6 +32,10 @@ class BeautifulScraper(object):
 
     @property
     def headers(self):
+        """Returns a list of tuples in (header_name, header_value) form.  This is done to
+        allow a single header (such as Location or Accept) to have multiple values, weather
+        or not that makes sense.
+        """
         def generate_header_items():
             for header, value in self._headers.iteritems():
                 if type(value) in (list, tuple):
@@ -40,13 +48,21 @@ class BeautifulScraper(object):
 
     @property
     def cookies(self):
+        """Returns a tuple of all the Cookie instances in the CookieJar.
+        """
         return tuple(self._cookiejar)
 
     @property
     def url(self):
+        """Returns the current url
+        """
         return self._url
 
     def add_header(self, key, value):
+        """Adds a header to the list of headers submitted with every request.  It is
+        possiable to have a single header_key have multiple values.  In that case,
+        the header will be specified multiple times in the underlying HTTP request.
+        """
         if key in self._headers:
             if type(self._headers[key]) == list:
                 self._headers[key].append(value)
@@ -56,9 +72,19 @@ class BeautifulScraper(object):
             self._headers[key] = value
 
     def remove_header(self, key):
+        """Removes a header_key from the headers submitted with every request.  If
+        there are multiple values assigned to this header_key, they will all be removed.
+        """
         del self._headers[key]
 
     def set_cookie(self, key, value, domain=None, path=None):
+        """Saves a Cookie instance into the underlying CookieJar instance.  It will be
+        submitted (as approperate, based on the request's domain, path, security, etc...)
+        along with any further requests.  You can specify the domain and path the cookie
+        should be valid for.  These need to be specified if there have been no requests
+        made yet with the current BeautifulScraper instance.  Otherwise, they are
+        optional.  The cookies set this way never expire, are are never "SecureOnly".
+        """
         if self._last_request is None and (domain is None or path is None):
             raise ValueError("You must specify a domain and path for a new cookie if you haven't made a request (self.go()) yet.")
 
@@ -81,6 +107,19 @@ class BeautifulScraper(object):
             ))
 
     def remove_cookie(self, key=None, domain=None, path=None):
+        """Removes a cookie from the underlying CookieJar instance.
+
+        If only the domain is specified, all cookies for that domain will be removed.
+
+        If only the domain and path are specified, all cookies for that path on that
+        domain will be removed.
+
+        If only the key is specified, the cookie with that key on the most recent request's
+        domain and the most recent request's path will be removed.  If there have been no
+        requests on this instance, an error will be thrown.
+
+        Any other combination of arguments is an error.
+        """
         if doman and not (path or key):
             self._cookiejar.clear(domain=domain)
 
@@ -99,6 +138,17 @@ class BeautifulScraper(object):
                     "you are trying to tell me to remove.  Read `pydoc beautifulscraper.BeautifulScraper.remove_cookie`")
 
     def go(self, url, data = None):
+        """Makes a request to url.  It will be a GET request unless you specify data, in
+        which case it will be a POST request with data as a payload.  The any headers in
+        self.headers will be a part of the request.  Any cookies that the CookieJar decides
+        are approperate will also be a part of the request.
+
+        self.response_headers will be populated with the headers from the server's response.
+
+        self.response_code will be populated with the HTTP status code in the server's response.
+
+        Returns a bs4.BeautifulSoup object initialized with the response body.
+        """
         # make the request
         self._url = url
         request = urllib2.Request(url)
