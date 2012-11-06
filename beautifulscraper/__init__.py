@@ -191,6 +191,6 @@ class BeautifulScraper(object):
             if 200 <= response.code <= 399:
                 return response
             else:
-                return super(HTTPActualErrorProcessor, self).http_response(request, response)
+                return urllib2.HTTPErrorProcessor.http_response(self, request, response)
         https_response = http_response
 
