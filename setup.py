@@ -24,6 +24,8 @@ PARAMS["author_email"] = "andrew@aregner.com"
 PARAMS["url"] = "https://github.com/adregner/beautifulscraper"
 PARAMS["license"] = "MIT"
 
+PARAMS["requires"] = ["beautifulsoup4"]
+
 PARAMS["packages"] = [
         PARAMS["name"],
         ]
