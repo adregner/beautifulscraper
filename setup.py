@@ -3,10 +3,7 @@
 # beautifulscraper is freely distributable under the terms of an MIT-style license.
 # See COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-import itertools
-import os
-
-from distutils.core import setup
+from setuptools import setup
 
 PARAMS = {}
 PARAMS["name"] = "beautifulscraper"
@@ -24,7 +21,7 @@ PARAMS["author_email"] = "andrew@aregner.com"
 PARAMS["url"] = "https://github.com/adregner/beautifulscraper"
 PARAMS["license"] = "MIT"
 
-PARAMS["requires"] = ["beautifulsoup4"]
+PARAMS["install_requires"] = ["beautifulsoup4"]
 
 PARAMS["packages"] = [
         PARAMS["name"],
