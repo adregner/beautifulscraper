@@ -4,6 +4,7 @@
 # See COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 from setuptools import setup
+import os
 
 PARAMS = {}
 PARAMS["name"] = "beautifulscraper"
@@ -27,10 +28,14 @@ PARAMS["packages"] = [
         PARAMS["name"],
         ]
 
+try:
+    os.link("README.md", "README")
+except:
+    pass
+
 PARAMS["data_files"] = [
         ("share/doc/{P[name]}-{P[version]}".format(P = PARAMS), [
-            "README.md",
-            "CHANGELOG",
+            "README",
             ]),
         ]
 
