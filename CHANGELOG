@@ -1,5 +1,13 @@
 beautifulscraper Changelog
 
+1.0.2 / 2012-12-02
+------------------
+  * Bug fix: http error responses weren't being passed to the urllib2 super-
+    class properly, causing an unexpected exception when an HTTP response
+    other then 200 through 399 was recieved.
+
+  * Properly added dependency on beautifulsoup4 package
+
 1.0.1 / 2012-10-31
 ------------------
   * Added documentation
