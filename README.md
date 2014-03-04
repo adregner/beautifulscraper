@@ -33,8 +33,8 @@ Start by requesting something.
 
 The response will be a plain BeautifulSoup object.  See [their documentation](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) for how to use it.
 ```python
->>> body.select("#repository_description")[0].text
-u'\nPython web-scraping library that wraps urllib2 and BeautifulSoup\n      \u2014 Read more\n\n'
+>>> body.select(".repository-description")[0].text
+u'\nPython web-scraping library that wraps urllib2 and BeautifulSoup\n'
 ```
 
 The headers from the server's response are accessiable.
