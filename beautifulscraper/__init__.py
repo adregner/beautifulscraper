@@ -120,7 +120,7 @@ class BeautifulScraper(object):
 
         Any other combination of arguments is an error.
         """
-        if doman and not (path or key):
+        if domain and not (path or key):
             self._cookiejar.clear(domain=domain)
 
         elif domain and path and not key:
