@@ -1,5 +1,9 @@
 beautifulscraper Changelog
 
+1.0.3 / 2014-11-18
+------------------
+  * Bug fix: Typo in remove_cookie method
+
 1.0.2 / 2012-12-02
 ------------------
   * Bug fix: http error responses weren't being passed to the urllib2 super-
