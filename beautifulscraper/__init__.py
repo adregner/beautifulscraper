@@ -137,7 +137,7 @@ class BeautifulScraper(object):
             raise ValueError("You called this method wrong, and I can't remove the cookies you think " \
                     "you are trying to tell me to remove.  Read `pydoc beautifulscraper.BeautifulScraper.remove_cookie`")
 
-    def go(self, url, data = None):
+    def go(self, url, data = None, **kwargs):
         """Makes a request to url.  It will be a GET request unless you specify data, in
         which case it will be a POST request with data as a payload.  The any headers in
         self.headers will be a part of the request.  Any cookies that the CookieJar decides
@@ -170,7 +170,7 @@ class BeautifulScraper(object):
 
         # remember for posteraity and return the parsed response
         self._last_request = request
-        return BeautifulSoup(response.read())
+        return BeautifulSoup(response.read(), **kwargs)
 
 
     class HTTPNoRedirectHandler(urllib2.HTTPRedirectHandler):
