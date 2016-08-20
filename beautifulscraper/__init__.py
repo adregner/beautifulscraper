@@ -146,6 +146,8 @@ class BeautifulScraper(object):
         self.response_headers will be populated with the headers from the server's response.
 
         self.response_code will be populated with the HTTP status code in the server's response.
+        
+        Any extra kwargs passed to this method will be passed to the underlying BeautifulSoup constructor.
 
         Returns a bs4.BeautifulSoup object initialized with the response body.
         """
