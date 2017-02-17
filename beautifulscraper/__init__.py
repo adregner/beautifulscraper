@@ -1,13 +1,21 @@
 # Copyright (C) 2012 by Andrew Regner <andrew@aregner.com>
 #
-# beautifulscraper is freely distributable under the terms of an MIT-style license.
+# beautifulscraper is freely distributable under the terms
+# of an MIT-style license.
 # See COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-import urllib2
-import cookielib
-from urllib import quote
-from urlparse import urlparse
+import sys
+if sys.version_info[0] < 3:
+    import urllib2
+    import cookielib
+    from urllib import quote
+    from urlparse import urlparse
+else:
+    import urllib.request as urllib2
+    import http.cookiejar as cookielib
+    from urllib.request import quote
+    from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+
 
 class BeautifulScraper(object):
     """Web-scraping class that tries to handle all the things a browser handles,
@@ -15,9 +23,10 @@ class BeautifulScraper(object):
     """
 
     def __init__(self):
-        """This creates a new BeautifulScraper instance.  The only thing to note about what
-        this does is that the underlying CookieJar instance is stored only in memory, and
-        is an instance attribute of your current BeautifulScraper instance.
+        """This creates a new BeautifulScraper instance.  The only thing to note
+        about what this does is that the underlying CookieJar instance is stored
+        only in memory, and is an instance attribute of your current
+        BeautifulScraper instance.
         """
         self._headers = {}
         self._cookiejar = cookielib.CookieJar()
@@ -32,19 +41,19 @@ class BeautifulScraper(object):
 
     @property
     def headers(self):
-        """Returns a list of tuples in (header_name, header_value) form.  This is done to
-        allow a single header (such as Location or Accept) to have multiple values, weather
-        or not that makes sense.
+        """Returns a list of tuples in (header_name, header_value) form.
+        This is done to allow a single header (such as Location or Accept)
+        to have multiple values, weather or not that makes sense.
         """
         def generate_header_items():
-            for header, value in self._headers.iteritems():
+            for header, value in self._headers.items():
                 if type(value) in (list, tuple):
                     for v in value:
                         yield (header, v)
                 else:
                     yield (header, value)
 
-        return [ h for h in generate_header_items() ]
+        return [h for h in generate_header_items()]
 
     @property
     def cookies(self):
@@ -86,7 +95,9 @@ class BeautifulScraper(object):
         optional.  The cookies set this way never expire, are are never "SecureOnly".
         """
         if self._last_request is None and (domain is None or path is None):
-            raise ValueError("You must specify a domain and path for a new cookie if you haven't made a request (self.go()) yet.")
+            raise ValueError("You must specify a domain and path for a \
+                             new cookie if you haven't made a request \
+                             (self.go()) yet.")
 
         if not domain:
             domain = ".%s" % urlparse(self._last_request.get_full_url())[1]
@@ -99,11 +110,11 @@ class BeautifulScraper(object):
             None, False,
             domain, True, bool(domain[0] == '.'),
             path, True,
-            secure = False,
-            expires = None,
-            discard = False,
-            comment = None, comment_url = None,
-            rest = {}
+            secure=False,
+            expires=None,
+            discard=False,
+            comment=None, comment_url=None,
+            rest={}
             ))
 
     def remove_cookie(self, key=None, domain=None, path=None):
@@ -137,7 +148,7 @@ class BeautifulScraper(object):
             raise ValueError("You called this method wrong, and I can't remove the cookies you think " \
                     "you are trying to tell me to remove.  Read `pydoc beautifulscraper.BeautifulScraper.remove_cookie`")
 
-    def go(self, url, data = None, **kwargs):
+    def go(self, url, data=None, parser='html.parser',**kwargs):
         """Makes a request to url.  It will be a GET request unless you specify data, in
         which case it will be a POST request with data as a payload.  The any headers in
         self.headers will be a part of the request.  Any cookies that the CookieJar decides
@@ -146,7 +157,7 @@ class BeautifulScraper(object):
         self.response_headers will be populated with the headers from the server's response.
 
         self.response_code will be populated with the HTTP status code in the server's response.
-        
+
         Any extra kwargs passed to this method will be passed to the underlying BeautifulSoup constructor.
 
         Returns a bs4.BeautifulSoup object initialized with the response body.
@@ -172,8 +183,7 @@ class BeautifulScraper(object):
 
         # remember for posteraity and return the parsed response
         self._last_request = request
-        return BeautifulSoup(response.read(), **kwargs)
-
+        return BeautifulSoup(response.read(), parser, **kwargs)
 
     class HTTPNoRedirectHandler(urllib2.HTTPRedirectHandler):
         """Sub-class of the urllib2 http redirect handler that does nothing,
@@ -189,10 +199,12 @@ class BeautifulScraper(object):
         with this class is that 3xx return codes are not considered errors.
         """
         handler_order = urllib2.HTTPErrorProcessor.handler_order
+
         def http_response(self, request, response):
             if 200 <= response.code <= 399:
                 return response
             else:
-                return urllib2.HTTPErrorProcessor.http_response(self, request, response)
+                return urllib2.HTTPErrorProcessor.http_response(self,
+                                                                request,
+                                                                response)
         https_response = http_response
-
