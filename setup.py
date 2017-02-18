@@ -8,7 +8,7 @@ import os
 
 PARAMS = {}
 PARAMS["name"] = "beautifulscraper"
-PARAMS["version"] = "1.0.4"
+PARAMS["version"] = "1.1.0"
 PARAMS["description"] = \
         "Python web-scraping library that wraps urllib2 and BeautifulSoup."
 PARAMS["long_description"] = \

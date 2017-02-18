@@ -33,15 +33,15 @@ Start by requesting something.
 
 The response will be a plain BeautifulSoup object.  See [their documentation](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) for how to use it.
 ```python
->>> body.select(".repository-description")[0].text
-u'\nPython web-scraping library that wraps urllib2 and BeautifulSoup\n'
+>>> body.select(".repository-meta-content")[0].text
+'\n\n            Python web-scraping library that wraps urllib2 and BeautifulSoup\n          \n'
 ```
 
 The headers from the server's response are accessiable.
 ```python
 >>> for header, value in scraper.response_headers.items():
 ...     print "%s: %s" % (header, value)
-... 
+...
 status: 200 OK
 content-length: 36179
 set-cookie: _gh_sess=BAh7BzoQX2NzcmZfdG9rZW4iMUNCOWxnbFpVd3EzOENqVk9GTUFXbDlMVUJIbGxsNEVZUFZJNiswRjhwejQ9Og9zZXNzaW9uX2lkIiUyNmQ2ODE5ZDdiZjM3MTA2N2VlZDk3Y2VlMDViYzI2OA%3D%3D--5d31df13d5c0eeb8f3cccb140392124968abc374; path=/; expires=Sat, 01-Jan-2022 00:00:00 GMT; secure; HttpOnly
