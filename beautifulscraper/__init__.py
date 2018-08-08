@@ -168,7 +168,10 @@ class BeautifulScraper(object):
 
         # maybe we have data
         if data:
-            request.add_data(data)
+            if not isinstance(data, bytes):
+                data = bytes(data, "utf-8")
+
+            request.data = data
 
         # set the headers
         for key, value in self.headers:
